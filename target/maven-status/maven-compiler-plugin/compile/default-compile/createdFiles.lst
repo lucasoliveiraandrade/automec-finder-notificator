@@ -1,1 +1,17 @@
+com/automecfinder/notificator/usecase/EmailUseCase$1.class
+com/automecfinder/notificator/model/Email.class
+com/automecfinder/notificator/model/Email$EmailBuilder.class
+com/automecfinder/notificator/config/properties/EmailProperties$Smtp.class
+com/automecfinder/notificator/config/properties/EmailProperties$Credential.class
+com/automecfinder/notificator/model/User$UserBuilder.class
+com/automecfinder/notificator/listener/PreNewUserListener.class
+com/automecfinder/notificator/model/User.class
+com/automecfinder/notificator/util/ParserUtil.class
+com/automecfinder/notificator/config/properties/EmailProperties$Smtp$SocketFactory.class
+com/automecfinder/notificator/enums/UserStatus.class
 com/automecfinder/notificator/NotificatorApplication.class
+com/automecfinder/notificator/usecase/UserUseCase.class
+com/automecfinder/notificator/repository/EmailRepository.class
+com/automecfinder/notificator/usecase/EmailUseCase.class
+com/automecfinder/notificator/controller/EmailController.class
+com/automecfinder/notificator/config/properties/EmailProperties.class

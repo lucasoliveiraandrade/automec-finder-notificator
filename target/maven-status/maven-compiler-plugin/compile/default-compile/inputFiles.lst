@@ -1,1 +1,11 @@
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/usecase/EmailUseCase.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/enums/UserStatus.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/util/ParserUtil.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/controller/EmailController.java
 /home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/NotificatorApplication.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/repository/EmailRepository.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/config/properties/EmailProperties.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/listener/PreNewUserListener.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/usecase/UserUseCase.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/model/User.java
+/home/lucasandrade/Documentos/automec-finder/notificator/src/main/java/com/automecfinder/notificator/model/Email.java

@@ -1,0 +1,42 @@
+server:
+  port: 8082
+
+application:
+  mail:
+    from: noreply@netshoes.com
+
+spring:
+  application:
+    name: automec-finder-notificator
+  mail:
+    credential:
+      user: kettlyn.silva.andrade@gmail.com
+      password: 25d01m89a
+    smtp:
+      host: smtp.gmail.com
+      socketFactory:
+        port: 465
+        class: javax.net.ssl.SSLSocketFactory
+      auth: true
+      port: 465
+
+  profiles:
+    active: dev
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/automec-finder
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    advertised:
+      host:
+        name: localhost
+      port: 9092
+    listener:
+      concurrency: 1
+    consumer:
+      topic: "user"
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
