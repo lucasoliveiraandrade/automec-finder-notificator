@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -20,13 +18,9 @@ public class PreNewUserListener {
     @KafkaListener(topics = "${spring.kafka.consumer.topic}", groupId = "automec-finder")
     public void dequeueMessage(String payload) {
 
+        log.info("Payload consumed: {}", payload);
+
         parserUtil.deserialize(payload)
-                .ifPresent(user -> {
-                    try {
-                        userUseCase.notifyPreNewUser(user);
-                    } catch (MessagingException e) {
-                        e.printStackTrace();
-                    }
-                });
+                .ifPresent(userUseCase::notifyPreNewUser);
     }
 }

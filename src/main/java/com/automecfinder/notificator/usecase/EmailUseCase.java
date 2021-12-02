@@ -3,7 +3,6 @@ package com.automecfinder.notificator.usecase;
 import com.automecfinder.notificator.config.properties.EmailProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -20,14 +19,31 @@ public class EmailUseCase {
 
     private EmailProperties emailProperties;
 
-    public void sendMail(String to, String subject, String body) throws MessagingException, javax.mail.MessagingException {
+    public void sendMail(String to, String subject, String body) {
+        try {
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setContent(body, "text/html; charset=utf-8");
 
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", emailProperties.getSmtp().getHost());
-        properties.put("mail.smtp.socketFactory.port", emailProperties.getSmtp().getSocketFactory().getPort());
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth", emailProperties.getSmtp().getAuth());
-        properties.put("mail.smtp.port", emailProperties.getSmtp().getPort());
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeBodyPart);
+
+            Message message = new MimeMessage(getSession());
+            message.setFrom(new InternetAddress());
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setContent(multipart);
+
+            Transport.send(message);
+
+            log.info("email enviado!!!");
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    private Session getSession() {
+        Properties properties = getProperties();
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -37,22 +53,17 @@ public class EmailUseCase {
         });
 
         session.setDebug(true);
+        return session;
+    }
 
-        MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(body, "text/html; charset=utf-8");
-
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(mimeBodyPart);
-
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress());
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-        message.setSubject(subject);
-        message.setContent(multipart);
-
-        Transport.send(message);
-
-        log.info("email enviado!!!");
+    private Properties getProperties() {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", emailProperties.getSmtp().getHost());
+        properties.put("mail.smtp.socketFactory.port", emailProperties.getSmtp().getSocketFactory().getPort());
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.auth", emailProperties.getSmtp().getAuth());
+        properties.put("mail.smtp.port", emailProperties.getSmtp().getPort());
+        return properties;
     }
 
 //    public void sendMail(List<String> tos, String subject, String body) throws MessagingException, javax.mail.MessagingException {
