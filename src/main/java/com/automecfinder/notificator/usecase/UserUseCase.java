@@ -21,6 +21,10 @@ public class UserUseCase {
     public void notifyPreNewUser(User user) {
 
         ofNullable(emailRepository.findByTypeAndStatus(EmailType.PRE_NEW_USER, EmailStatus.ACTIVE))
-                .ifPresent(email -> emailUseCase.sendMail(user.getEmail(), email.getSubject(), email.getBody()));
+                .map(email -> emailUseCase.sendMail(user.getEmail(), email.getSubject(), email.getBody()))
+                .orElseGet(() -> {
+                    log.info("Pre New User email not found in database to be sent");
+                    return false;
+                });
     }
 }

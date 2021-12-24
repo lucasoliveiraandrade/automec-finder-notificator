@@ -17,12 +17,19 @@ import java.util.Properties;
 @AllArgsConstructor
 public class EmailUseCase {
 
+    private static final String TEXT_HTML_CHARSET_UTF_8 = "text/html; charset=utf-8";
+
     private EmailProperties emailProperties;
 
-    public void sendMail(String to, String subject, String body) {
+    public Boolean sendMail(String to, String subject, String body) {
+
+        log.info("Sending email to {}", to);
+
+        boolean emailSent = false;
+
         try {
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setContent(body, "text/html; charset=utf-8");
+            mimeBodyPart.setContent(body, TEXT_HTML_CHARSET_UTF_8);
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(mimeBodyPart);
@@ -35,10 +42,13 @@ public class EmailUseCase {
 
             Transport.send(message);
 
-            log.info("email enviado!!!");
-        }
-        catch (Exception e){
+            log.info("Email sent successfully");
+            emailSent = true;
 
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            return emailSent;
         }
     }
 
@@ -65,18 +75,4 @@ public class EmailUseCase {
         properties.put("mail.smtp.port", emailProperties.getSmtp().getPort());
         return properties;
     }
-
-//    public void sendMail(List<String> tos, String subject, String body) throws MessagingException, javax.mail.MessagingException {
-//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-//        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-//        mimeMessageHelper.setTo(tos.toArray(new String[tos.size()]));
-//        send(mimeMessage, mimeMessageHelper, subject, body);
-//    }
-//
-//    private void send(MimeMessage message, MimeMessageHelper mimeMessageHelper, String subject, String body) throws MessagingException {
-//        mimeMessageHelper.setFrom(templateEmail.getEmailFrom());
-//        mimeMessageHelper.setSubject(subject);
-//        mimeMessageHelper.setText(templateEmail.getHtmlTemplate(body), true);
-//        javaMailSender.send(message);
-//    }
 }
